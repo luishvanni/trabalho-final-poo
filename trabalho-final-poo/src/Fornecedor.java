@@ -1,4 +1,4 @@
-public class Fornecedor implements Cadastro{
+public class Fornecedor{
     
     private String nome;
     private String descricao;
@@ -64,38 +64,7 @@ public class Fornecedor implements Cadastro{
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-
-
-    @Override
-    public void incluir() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'incluir'");
-    }
-
-
-    @Override
-    public void consultar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultar'");
-    }
-
-
-    @Override
-    public void alterar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'alterar'");
-    }
-
-
-    @Override
-    public void excluir() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'excluir'");
-    }
-
-
-    
-    
+ 
 
 }
    

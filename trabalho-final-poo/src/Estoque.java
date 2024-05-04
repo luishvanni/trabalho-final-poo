@@ -1,4 +1,4 @@
-public class Estoque implements Cadastro{
+public class Estoque{
     private Integer quantidade;
     private Double preco;
 
@@ -25,30 +25,6 @@ public class Estoque implements Cadastro{
 
     public void setPreco(Double preco) {
         this.preco = preco;
-    }
-
-    @Override
-    public void incluir() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'incluir'");
-    }
-
-    @Override
-    public void consultar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultar'");
-    }
-
-    @Override
-    public void alterar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'alterar'");
-    }
-
-    @Override
-    public void excluir() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'excluir'");
     }
 
       

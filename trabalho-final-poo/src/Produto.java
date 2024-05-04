@@ -1,4 +1,4 @@
-public class Produto implements Cadastro{
+public class Produto{
     
     private String nome;
     private String descricao;
@@ -43,33 +43,6 @@ public class Produto implements Cadastro{
     public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
     }
-
-    @Override
-    public void incluir() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'incluir'");
-    }
-
-    @Override
-    public void consultar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultar'");
-    }
-
-    @Override
-    public void alterar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'alterar'");
-    }
-
-    @Override
-    public void excluir() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'excluir'");
-    }
-
-    
-
-    
+ 
 
 }
