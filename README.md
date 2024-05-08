@@ -51,7 +51,7 @@ Open the terminal and navigate to the directory where you want to clone the repo
 
 ```bash
 git clone https://github.com/luishvanni/trabalho-final-poo.git
-'''
+```
 
 ### Setting up the Development Environment
 Make sure you have the Java Development Kit (JDK) installed on your computer. You can check the installation using the java -version command. Open the project in a Java IDE, such as Eclipse or IntelliJ IDEA.
