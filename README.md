@@ -60,7 +60,7 @@ Abra o terminal e navegue até o diretório onde deseja clonar o repositório. E
 git clone https://github.com/luishvanni/trabalho-final-poo.git
 ```
 
-##Configurar o Ambiente de Desenvolvimento
+### Configurar o Ambiente de Desenvolvimento
 
 Certifique-se de ter o Java Development Kit (JDK) instalado no seu computador. Você pode verificar a instalação usando o comando java -version.
 Abra o projeto em um IDE Java, como o Eclipse ou o IntelliJ IDEA.
