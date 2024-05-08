@@ -21,7 +21,7 @@ In the first part of the project, arrays were used to contain the objects. In th
 - Order query screen
 - Query by order number or date range
 
-Sales rules:
+### Sales rules:
 - Items can only be sold if they are in stock
 - Items with ZERO stock are shown as unavailable in the query
 - Placing an order reduces the stock quantity
@@ -33,10 +33,10 @@ Screen for querying orders placed by store management (Internal Actor):
 
 The application implements all the requirements specified in the document, following as a standard behavior websites such as Amazon, Mercado Livre, or AliExpress. The system is used by two actors: Internal and Customer, accessing the functionalities through menus.
 
-Class Model:
+## Class Model:
 The class model of the proposed application is present in the source code.
 
-Work Division:
+## Work Division:
 The work was divided into two parts. The first consisted of implementing the functionalities of registering Products (with Inventory), Customers (with Address), and Suppliers (with Address). The second part, with the complete application, was delivered at the end of the semester.
 
 In the second part of the project, all data was saved in files and recovered at each program execution, simulating an application that uses databases. It was also necessary to use exceptions programmed by the developer, such as in the case of an insufficient quantity of products to place an order.
