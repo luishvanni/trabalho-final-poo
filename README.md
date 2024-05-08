@@ -13,8 +13,6 @@ For each registration, the following functionalities were implemented:
 - Deletion
 - Query (by code and by name)
 
-In the first part of the project, arrays were used to contain the objects. In the second part, the arrays were replaced by Lists.
-
 ## Part 2 - Customer Actor
 - Product query screen (with search) and order placement
 - Shopping cart
@@ -35,11 +33,6 @@ The application implements all the requirements specified in the document, follo
 
 ## Class Model:
 The class model of the proposed application is present in the source code.
-
-## Work Division:
-The work was divided into two parts. The first consisted of implementing the functionalities of registering Products (with Inventory), Customers (with Address), and Suppliers (with Address). The second part, with the complete application, was delivered at the end of the semester.
-
-In the second part of the project, all data was saved in files and recovered at each program execution, simulating an application that uses databases. It was also necessary to use exceptions programmed by the developer, such as in the case of an insufficient quantity of products to place an order.
 
 ## Running the Program
 
