@@ -1,70 +1,62 @@
-# Sistema de Controle de Estoque e Pedidos
+# Inventory and Order Control System
 
-Este repositório contém a implementação de um sistema de controle de estoque e pedidos em Java, conforme especificado abaixo:
+This repository contains the implementation of an inventory and order control system in Java, as specified below:
 
-## Parte 1 - Ator Administrador
+## Part 1 - Administrator Actor
+- Supplier registration
+- Product registration, relating them to suppliers
+- Maintenance of product inventory
 
-- Cadastro de fornecedores
-- Cadastro de produtos, relacionando-os aos fornecedores
-- Manutenção do estoque de produtos
+For each registration, the following functionalities were implemented:
+- Inclusion
+- Change
+- Deletion
+- Query (by code and by name)
 
-Para cada cadastro, foram implementadas as seguintes funcionalidades:
+In the first part of the project, arrays were used to contain the objects. In the second part, the arrays were replaced by Lists.
 
-- Inclusão
-- Alteração
-- Exclusão
-- Consulta (por código e por nome)
+## Part 2 - Customer Actor
+- Product query screen (with search) and order placement
+- Shopping cart
+- Order query screen
+- Query by order number or date range
 
-Na primeira parte do trabalho, foram utilizados vetores para conter os objetos. Na segunda parte, os vetores foram substituídos por Listas.
+Sales rules:
+- Items can only be sold if they are in stock
+- Items with ZERO stock are shown as unavailable in the query
+- Placing an order reduces the stock quantity
+- If the customer wants to buy more than is in stock, they receive an error message offering the maximum available quantity
+- The total value of the order must be calculated and displayed to the customer
 
-## Parte 2
+Screen for querying orders placed by store management (Internal Actor):
+- Query by order number or order date
 
-### Ator Cliente
+The application implements all the requirements specified in the document, following as a standard behavior websites such as Amazon, Mercado Livre, or AliExpress. The system is used by two actors: Internal and Customer, accessing the functionalities through menus.
 
-- Tela de consulta de produtos (com pesquisa) e realização de pedidos
-  - Carrinho de compras
-- Tela de consulta de pedidos
-  - Consulta por número do pedido ou intervalo de datas
+Class Model:
+The class model of the proposed application is present in the source code.
 
-### Regras para vendas
+Work Division:
+The work was divided into two parts. The first consisted of implementing the functionalities of registering Products (with Inventory), Customers (with Address), and Suppliers (with Address). The second part, with the complete application, was delivered at the end of the semester.
 
-- Só se pode vender itens que estão em estoque
-- Itens com estoque ZERO são mostrados como indisponíveis na consulta
-- A realização do pedido diminui a quantidade do estoque
-- Se o cliente quiser comprar mais do que há em estoque, recebe uma mensagem de erro, oferecendo-lhe a quantidade máxima disponível
-- Deve ser calculado o valor total do pedido e exibido ao cliente
-- Tela de consulta de pedidos realizados por parte da administração da loja (Ator Interno)
-  - Consulta por número do pedido ou data de realização
+In the second part of the project, all data was saved in files and recovered at each program execution, simulating an application that uses databases. It was also necessary to use exceptions programmed by the developer, such as in the case of an insufficient quantity of products to place an order.
 
-A aplicação implementa todos os requisitos previstos no documento, seguindo como padrão de comportamento os sites como Amazon, Mercado Livre ou AliExpress. O sistema é utilizado por dois atores: Internos e Clientes, acessando as funcionalidades através de menus.
+## Running the Program
 
-## Modelo de Classes
+To initialize the project on your computer, follow the steps below:
 
-O modelo de classes da aplicação proposta está presente no código fonte.
+### Cloning the Repository
 
-## Divisão do Trabalho
-
-O trabalho foi dividido em duas partes. A primeira consistiu na implementação das funcionalidades de cadastros de Produtos (com Estoque), Clientes (com Endereço) e Fornecedores (com Endereço). A segunda parte, com a aplicação completa, foi entregue no final do semestre.
-
-Na segunda parte do trabalho, os dados foram todos gravados em arquivos e recuperados a cada execução do programa, simulando uma aplicação que faz uso de bancos de dados. Também foi necessário utilizar exceções programadas pelo desenvolvedor, como no caso de quantidade insuficiente de produtos para realizar um pedido.
-
-## Execução do Programa
-
-Para inicializar o projeto em seu computador, siga os passos abaixo:
-
-### Clonar o Repositório
-
-Abra o terminal e navegue até o diretório onde deseja clonar o repositório. Em seguida, execute o seguinte comando:
+Open the terminal and navigate to the directory where you want to clone the repository. Then, execute the following command:
 
 ```bash
 git clone https://github.com/luishvanni/trabalho-final-poo.git
-```
+'''
 
-### Configurar o Ambiente de Desenvolvimento
+### Setting up the Development Environment
+Make sure you have the Java Development Kit (JDK) installed on your computer. You can check the installation using the java -version command. Open the project in a Java IDE, such as Eclipse or IntelliJ IDEA.
 
-Certifique-se de ter o Java Development Kit (JDK) instalado no seu computador. Você pode verificar a instalação usando o comando java -version.
-Abra o projeto em um IDE Java, como o Eclipse ou o IntelliJ IDEA.
 
-## Autores
+## Authors
 
 - [@luishvanni](https://www.github.com/luishvanni)
