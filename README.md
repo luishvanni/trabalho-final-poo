@@ -58,6 +58,7 @@ Abra o terminal e navegue até o diretório onde deseja clonar o repositório. E
 
 ```bash
 git clone https://github.com/luishvanni/trabalho-final-poo.git
+```
 
 ###Configurar o Ambiente de Desenvolvimento
 
