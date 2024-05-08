@@ -50,7 +50,14 @@ Na segunda parte do trabalho, os dados foram todos gravados em arquivos e recupe
 
 ## Execução do Programa
 
-Para executar o programa, basta seguir as instruções do arquivo `README.md` presente no diretório do projeto.
+Para inicializar o projeto em seu computador, siga os passos abaixo:
+
+### Clonar o Repositório
+
+Abra o terminal e navegue até o diretório onde deseja clonar o repositório. Em seguida, execute o seguinte comando:
+
+```bash
+git clone https://github.com/luishvanni/trabalho-final-poo.git
 
 ## Autores
 
