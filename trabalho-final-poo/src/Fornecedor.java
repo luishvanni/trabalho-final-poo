@@ -64,7 +64,18 @@ public class Fornecedor{
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
- 
+
+
+    @Override
+    public String toString() {
+        return "Nome:" + nome + 
+        "\n" + "Descricao:" + descricao + 
+        "," + "Telefone:" + telefone + 
+        "," + "Email:" + email + 
+        "\n" + "Endereco:" + getEndereco().toString();
+    }
+
+    
 
 }
    

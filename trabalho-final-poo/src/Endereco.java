@@ -90,6 +90,21 @@ public class Endereco {
         this.estado = estado;
     }
 
+
+    @Override
+    public String toString() {
+        return  
+               "\n" + "Rua: " + rua + 
+               "\n" + "Número: " + numero + 
+               "\n" + "Complemento: " + complemento + 
+               "\n" + "Bairro: " + bairro + 
+               "\n" + "CEP: " + cep + 
+               "\n" + "Cidade: " + cidade + 
+               "\n" + "Estado: " + estado;
+    }
+
+    
+
     
 
     

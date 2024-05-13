@@ -27,5 +27,12 @@ public class Estoque{
         this.preco = preco;
     }
 
+    @Override
+    public String toString() {
+        return "Quantidade=" + quantidade + ", Preco=" + preco;
+    }
+
+    
+
       
 }
