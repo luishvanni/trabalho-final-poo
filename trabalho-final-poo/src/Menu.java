@@ -10,16 +10,20 @@ public class Menu {
             System.out.println("========================================");
             System.out.println("             MENU PRINCIPAL             ");
             System.out.println("========================================");
-            System.out.println("1. Incluir Fornecedor");
-            System.out.println("2. Excluir Fornecedor");
-            System.out.println("3. Incluir Produto");
-            System.out.println("4. Excluir Produto");
-            System.out.println("5. Consultar Produto por Nome");
-            System.out.println("6. Consultar Produto por Código");
-            System.out.println("7. Consultar Fornecedor por Nome");
-            System.out.println("8. Alterar Fornecedor");
-            System.out.println("9. Alterar Produto");
-            System.out.println("0. Sair");
+            System.out.println("1.   Incluir Fornecedor");
+            System.out.println("2.   Excluir Fornecedor");
+            System.out.println("3.   Incluir Cliente");
+            System.out.println("4.   Excluir Cliente");
+            System.out.println("5.   Incluir Produto");
+            System.out.println("6.   Excluir Produto");
+            System.out.println("7.   Consultar Produto por Nome");
+            System.out.println("8.   Consultar Produto por Código");
+            System.out.println("9.   Consultar Fornecedor por Nome");
+            System.out.println("10.  Consultar Cliente por Nome");
+            System.out.println("11.  Alterar Fornecedor");
+            System.out.println("12.  Alterar Produto");
+            System.out.println("13.  Alterar Cliente");
+            System.out.println("0.Sair");
             System.out.println("========================================");
             System.out.print("Escolha uma opção: ");
             opcao = sc.nextInt();
@@ -35,32 +39,48 @@ public class Menu {
                     sistema.excluirFornecedor();
                     break;
                 case 3:
+                    System.out.println("== Incluir Cliente ==");
+                    sistema.incluirCliente();
+                    break;
+                case 4:
+                    System.out.println("== Excluir Cliente ==");
+                    sistema.excluirCliente();
+                    break;
+                case 5:
                     System.out.println("== Incluir Produto ==");
                     sistema.incluirProduto();
                     break;
-                case 4:
+                case 6:
                     System.out.println("== Excluir Produto ==");
                     sistema.excluirProduto();
                     break;
-                case 5:
+                case 7:
                     System.out.println("== Consultar Produto por Nome ==");
                     sistema.consultarProdutoPorNome();
                     break;
-                case 6:
+                case 8:
                     System.out.println("== Consultar Produto por Código ==");
                     sistema.consultarProdutoPorCodigo();
                     break;
-                case 7:
+                case 9:
                     System.out.println("== Consultar Fornecedor por Nome ==");
                     sistema.consultarFornecedorPorNome();
                     break;
-                case 8:
+                case 10:
+                    System.out.println("== Consultar Cliente por Nome ==");
+                    sistema.consultarClientePorNome();
+                    break;
+                case 11:
                     System.out.println("== Alterar Fornecedor ==");
                     sistema.alterarFornecedor();
                     break;
-                case 9:
+                case 12:
                     System.out.println("== Alterar Produto ==");
                     sistema.alterarProduto();
+                    break;
+                case 13:
+                    System.out.println("== Alterar Cliente ==");
+                    sistema.alterarCliente();
                     break;
                 case 0:
                     System.out.println("Saindo...");

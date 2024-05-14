@@ -29,8 +29,9 @@ public class Estoque{
 
     @Override
     public String toString() {
-        return "Quantidade=" + quantidade + ", Preco=" + preco;
-    }
+        String precoFormatado = String.format("R$%,.2f", preco); //deixa o preço no formato BR
+        return "Quantidade: " + quantidade + ", Preço = " + precoFormatado;
+}
 
     
 

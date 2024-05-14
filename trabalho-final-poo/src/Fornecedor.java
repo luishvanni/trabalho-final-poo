@@ -68,11 +68,13 @@ public class Fornecedor{
 
     @Override
     public String toString() {
-        return "Nome:" + nome + 
-        "\n" + "Descricao:" + descricao + 
-        "," + "Telefone:" + telefone + 
-        "," + "Email:" + email + 
-        "\n" + "Endereco:" + getEndereco().toString();
+        return 
+        "----------------------------------------" +
+        "\n" + "Nome: " + nome + 
+        "\n" + "Descrição: " + descricao + 
+        "," + " Telefone: " + telefone + 
+        "," + " Email: " + email + 
+        "\n" + "Endereco: " + getEndereco().toString();
     }
 
     

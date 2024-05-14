@@ -72,7 +72,10 @@ public class Produto{
 
     @Override
     public String toString() {
-        return "nome=" + nome + ", descricao=" + descricao + ", foto=" + Arrays.toString(foto) + ", estoque=" + getEstoque().toString();
+        return 
+        "----------------------------------------" +
+        "\n" + "Nome: " + nome + 
+        "\n" + "Descricao: " + descricao + ", Foto: " + Arrays.toString(foto) + ", Estoque/" + getEstoque().toString();
     }
 
 

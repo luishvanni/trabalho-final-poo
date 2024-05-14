@@ -64,6 +64,18 @@ public class Cliente {
         this.endereco = endereco;
     }
 
+
+    @Override
+    public String toString() {
+        return 
+        "----------------------------------------" +
+        "\n" + "Nome: " + nome + 
+        "\n" + "Telefone:" + telefone + ", Email:" + email + ", cartaoCredito = "+ cartaoCredito + 
+        "\n" + "Endereco: " + getEndereco().toString();
+    }
+
+    
+
     
 
     
