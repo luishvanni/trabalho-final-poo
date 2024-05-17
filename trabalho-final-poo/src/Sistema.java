@@ -40,16 +40,15 @@ public class Sistema {
         System.out.println("Nome do fornecedor:");
         String nome = sc.nextLine();
         System.out.println("Código:");
-        int codigo = sc.nextInt();
+        String codigo = sc.nextLine();
 
         // Verificar se já existe um fornecedor com o mesmo código
         for (Fornecedor fornecedor : fornecedores) {
-            if (fornecedor.getCodigo() == codigo) {
+            if (fornecedor.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println("Já existe um fornecedor com esse código.");
                 return;
         }
     }
-        sc.nextLine();
         System.out.println("Descrição:");
         String descricao = sc.nextLine();
         System.out.println("Telefone:");
@@ -68,13 +67,12 @@ public class Sistema {
     public void excluirFornecedor() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o código do fornecedor que deseja excluir:");
-        int codigo = sc.nextInt();
-        sc.nextLine();
+        String codigo = sc.nextLine();
     
         boolean fornecedorEncontrado = false;
         for (int i = 0; i < fornecedores.size(); i++) {
             Fornecedor f = fornecedores.get(i);
-            if (f.getCodigo() == codigo) {
+            if (f.getCodigo().equalsIgnoreCase(codigo)) {
                 fornecedores.remove(i);
                 fornecedorEncontrado = true;
                 System.out.println("Fornecedor excluído com sucesso!");
@@ -92,15 +90,15 @@ public class Sistema {
         System.out.println("Nome do cliente:");
         String nome = sc.nextLine();
         System.out.println("Código:");
-        int codigo = sc.nextInt();
+        String codigo = sc.nextLine();
          // Verificar se já existe um produto com o mesmo código
          for (Cliente cliente : clientes) {
-            if (cliente.getCodigo() == codigo) {
+            if (cliente.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println("Já existe um cliente com esse código.");
                 return;
         }
     }
-
+        
         System.out.println("Telefone:");
         String telefone = sc.nextLine();
         System.out.println("E-mail:");
@@ -120,13 +118,12 @@ public class Sistema {
     public void excluirCliente() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o código do cliente que deseja excluir:");
-        int codigo = sc.nextInt();
-        sc.nextInt();
+        String codigo = sc.nextLine();
     
         boolean clienteEncontrado = false;
         for (int i = 0; i < clientes.size(); i++) {
             Cliente cliente = clientes.get(i);
-            if (cliente.getCodigo() == codigo) {
+            if (cliente.getCodigo().equalsIgnoreCase(codigo)) {
                 clientes.remove(i);
                 clienteEncontrado = true;
                 System.out.println("Cliente excluído com sucesso!");
@@ -144,17 +141,16 @@ public class Sistema {
         System.out.println("Nome do produto:");
         String nome = sc.nextLine();
         System.out.println("Código do produto:");
-        int codigo = sc.nextInt();
+        String codigo = sc.nextLine();
 
         // Verificar se já existe um produto com o mesmo código
         for (Produto produto : produtos) {
-            if (produto.getCodigo() == codigo) {
+            if (produto.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println("Já existe um produto com esse código.");
                 return;
         }
     }
 
-        sc.nextLine();
         System.out.println("Descrição:");
         String descricao = sc.nextLine();
         System.out.println("Quantidade em estoque:");
@@ -174,13 +170,12 @@ public class Sistema {
     public void excluirProduto() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o código do produto que deseja excluir:");
-        int codigo = sc.nextInt();
-        sc.nextLine();
+        String codigo = sc.nextLine();;
     
         boolean produtoEncontrado = false;
         for (int i = 0; i < produtos.size(); i++) {
             Produto produto = produtos.get(i);
-            if (produto.getCodigo() == codigo) {
+            if (produto.getCodigo().equalsIgnoreCase(codigo)) {
                 produtos.remove(i);
                 produtoEncontrado = true;
                 System.out.println("Produto excluído com sucesso!");
@@ -211,10 +206,10 @@ public class Sistema {
     public void consultarProdutoPorCodigo() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o código do produto:");
-        int codigo = sc.nextInt();
+        String codigo = sc.nextLine();
 
         for(Produto p : produtos) {
-            if (p.getCodigo() == codigo) {
+            if (p.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println(p.toString());
                 return;
             }
@@ -243,10 +238,10 @@ public class Sistema {
     public void consultarFornecedorPorCodigo() {
         Scanner sc = new Scanner (System.in);
         System.out.println("Digite o código do fornecedor:");
-        int codigo = sc.nextInt();
+        String codigo = sc.nextLine();
 
         for(Fornecedor f : fornecedores) {
-            if (f.getCodigo() == codigo) {
+            if (f.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println(f.toString());
                 return;
             }
@@ -275,10 +270,10 @@ public class Sistema {
     public void consultarClientePorCodigo() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o código do cliente:");
-        int codigo = sc.nextInt();
+        String codigo = sc.nextLine();
 
         for (Cliente c : clientes) {
-            if (c.getCodigo() == codigo) {
+            if (c.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println(c.toString());
                 return;
             }
@@ -357,10 +352,10 @@ public class Sistema {
     public void alterarProduto() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o código do produto que deseja alterar:");
-        int codigo = sc.nextInt();
+        String codigo = sc.nextLine();
     
         for (Produto p : produtos) {
-            if (p.getCodigo() == codigo) {
+            if (p.getCodigo().equalsIgnoreCase(codigo)) {
                 boolean produtoEncontrado = true;
                 while (produtoEncontrado) {
                     System.out.println("O que deseja alterar?");

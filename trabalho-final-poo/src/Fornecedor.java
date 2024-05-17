@@ -1,14 +1,14 @@
 public class Fornecedor{
     
     private String nome;
-    private int codigo;
+    private String codigo;
     private String descricao;
     private String telefone;
     private String email;
     private Endereco endereco;
 
 
-    public Fornecedor(String nome, int codigo ,String descricao, String telefone, String email, Endereco endereco) {
+    public Fornecedor(String nome, String codigo ,String descricao, String telefone, String email, Endereco endereco) {
         this.nome = nome;
         this.codigo = codigo;
         this.descricao = descricao;
@@ -27,12 +27,12 @@ public class Fornecedor{
         this.nome = nome;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

@@ -1,13 +1,13 @@
 public class Cliente {
     private String nome;
-    private int codigo;
+    private String codigo;
     private String telefone;
     private String email;
     private String cartaoCredito;
     private Endereco endereco;
 
 
-    public Cliente(String nome,int codigo, String telefone, String email, String cartaoCredito, Endereco endereco) {
+    public Cliente(String nome,String codigo, String telefone, String email, String cartaoCredito, Endereco endereco) {
         this.nome = nome;
         this.codigo = codigo;
         this.telefone = telefone;
@@ -26,11 +26,11 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

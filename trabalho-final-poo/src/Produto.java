@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class Produto{
 
 
-    private int codigo;
+    private String codigo;
     private String nome;
     private String descricao;
     private byte[] foto;
@@ -11,7 +11,7 @@ public class Produto{
 
    
 
-    public Produto(int codigo,String nome, String descricao, byte[] foto, Estoque estoque) {
+    public Produto(String codigo,String nome, String descricao, byte[] foto, Estoque estoque) {
         this.codigo = codigo;
         this.nome = nome;
         this.descricao = descricao;
@@ -19,12 +19,12 @@ public class Produto{
         this.estoque = estoque;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
     
@@ -75,6 +75,7 @@ public class Produto{
         return 
         "----------------------------------------" +
         "\n" + "Nome: " + nome + 
+        "\n" + "Código: " + codigo + 
         "\n" + "Descricao: " + descricao + ", Foto: " + Arrays.toString(foto) + ", Estoque/" + getEstoque().toString();
     }
 
