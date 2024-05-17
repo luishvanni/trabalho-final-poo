@@ -1,13 +1,15 @@
 public class Cliente {
     private String nome;
+    private int codigo;
     private String telefone;
     private String email;
     private String cartaoCredito;
     private Endereco endereco;
 
 
-    public Cliente(String nome, String telefone, String email, String cartaoCredito, Endereco endereco) {
+    public Cliente(String nome,int codigo, String telefone, String email, String cartaoCredito, Endereco endereco) {
         this.nome = nome;
+        this.codigo = codigo;
         this.telefone = telefone;
         this.email = email;
         this.cartaoCredito = cartaoCredito;
@@ -22,6 +24,14 @@ public class Cliente {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
 
@@ -70,18 +80,9 @@ public class Cliente {
         return 
         "----------------------------------------" +
         "\n" + "Nome: " + nome + 
+        "\n" + "Código: " + codigo +
         "\n" + "Telefone:" + telefone + ", Email:" + email + ", cartaoCredito = "+ cartaoCredito + 
         "\n" + "Endereco: " + getEndereco().toString();
     }
 
-    
-
-    
-
-    
-
- 
-
-
-    
 }
