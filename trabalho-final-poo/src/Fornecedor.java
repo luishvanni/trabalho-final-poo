@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Fornecedor{
     
     private String nome;
@@ -6,6 +9,7 @@ public class Fornecedor{
     private String telefone;
     private String email;
     private Endereco endereco;
+    private List<Produto> produtos;
 
 
     public Fornecedor(String nome, String codigo ,String descricao, String telefone, String email, Endereco endereco) {
@@ -15,6 +19,15 @@ public class Fornecedor{
         this.telefone = telefone;
         this.email = email;
         this.endereco = endereco;
+        this.produtos = new ArrayList<>();
+    }
+
+    public void adicionarProduto(Produto produto) {
+        produtos.add(produto);
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
 
@@ -76,18 +89,31 @@ public class Fornecedor{
         this.endereco = endereco;
     }
 
-
+    private String produtosToString() {
+        String f = "";
+        if (produtos.isEmpty()) {
+            f += "Nenhum produto registrado no momento.";
+        }
+        for(Produto p : produtos) {
+            f += p.toString();
+        }
+        return f;
+    }
+    
     @Override
     public String toString() {
         return 
-        "----------------------------------------" +
-        "\n" + "Nome: " + nome + 
-        "\n" + "Código: " + codigo +
-        "\n" + "Descrição: " + descricao + 
-        "," + " Telefone: " + telefone + 
-        "," + " Email: " + email + 
-        "\n" + "Endereco: " + getEndereco().toString();
-    }
+            "----------------------------------------\n" +
+            "Nome: " + nome + "\n" +
+            "Código: " + codigo + "\n" +
+            "Descrição: " + descricao + "\n" +
+            "Telefone: " + telefone + "\n" +
+            "Email: " + email + "\n" +
+            "Endereço: " + endereco.toString() + "\n" +
+            "Produtos: \n" + produtosToString();
+            
+        
+}
 
 
 }

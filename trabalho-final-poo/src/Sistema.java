@@ -15,274 +15,189 @@ public class Sistema {
         
     }
 
-    // Métodos para entrada de dados
+    
 
-    private String lerString(String mensagem) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println(mensagem);
-        return sc.nextLine();
-    }
-
-    private Endereco lerEndereco() {
-        String rua = lerString("Rua:");
-        String numero = lerString("Número:");
-        String complemento = lerString("Complemento:");
-        String bairro = lerString("Bairro:");
-        String cidade = lerString("Cidade:");
-        String cep = lerString("CEP:");
-        String estado = lerString("Estado:");
-        return new Endereco(rua, numero, complemento, bairro, cidade, cep, estado);
-    }
+   
 
     // Método para incluir um fornecedor
-    public void incluirFornecedor() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Nome do fornecedor:");
-        String nome = sc.nextLine();
-        System.out.println("Código:");
-        String codigo = sc.nextLine();
-
+    public boolean incluirFornecedor(String nome, String codigo, String descricao, String telefone, String email, Endereco endereco) {
+       
         // Verificar se já existe um fornecedor com o mesmo código
         for (Fornecedor fornecedor : fornecedores) {
             if (fornecedor.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println("Já existe um fornecedor com esse código.");
-                return;
+                return false;
         }
     }
-        System.out.println("Descrição:");
-        String descricao = sc.nextLine();
-        System.out.println("Telefone:");
-        String telefone = sc.nextLine();
-        System.out.println("Email:");
-        String email = sc.nextLine();
-
-        Endereco endereco = lerEndereco();
-
         Fornecedor fornecedor = new Fornecedor(nome, codigo,descricao, telefone, email, endereco);
         fornecedores.add(fornecedor);
-        System.out.println("Fornecedor adicionado com sucesso!");
+            return true;
+        
 }
 
-    //método para excluir um fornecedor por CÓDIGO (apenas)
-    public void excluirFornecedor() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o código do fornecedor que deseja excluir:");
-        String codigo = sc.nextLine();
-    
-        boolean fornecedorEncontrado = false;
+     // Método para excluir um fornecedor por código
+     public boolean excluirFornecedor(String codigo) {
         for (int i = 0; i < fornecedores.size(); i++) {
             Fornecedor f = fornecedores.get(i);
             if (f.getCodigo().equalsIgnoreCase(codigo)) {
                 fornecedores.remove(i);
-                fornecedorEncontrado = true;
-                System.out.println("Fornecedor excluído com sucesso!");
-                return;
+                return true; // Fornecedor encontrado e removido
             }
         }
-
-        System.out.println("Forncedor não encontrado com código fornecido: " + codigo);
-    
+        return false; // Fornecedor não encontrado
     }
 
     // método para incluir um cliente
-    public void incluirCliente() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Nome do cliente:");
-        String nome = sc.nextLine();
-        System.out.println("Código:");
-        String codigo = sc.nextLine();
+    public boolean incluirCliente(String nome, String codigo,String telefone, String email, String cartaoCredito, Endereco endereco) {
+        
          // Verificar se já existe um produto com o mesmo código
          for (Cliente cliente : clientes) {
             if (cliente.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println("Já existe um cliente com esse código.");
-                return;
+                return false;
         }
     }
         
-        System.out.println("Telefone:");
-        String telefone = sc.nextLine();
-        System.out.println("E-mail:");
-        String email = sc.nextLine();
-        System.out.println("Cartão de crédito:");
-        String cartaoCredito = sc.nextLine();
-        
-        Endereco endereco = lerEndereco();
-        
         Cliente cliente = new Cliente(nome, codigo, telefone, email, cartaoCredito, endereco);
         clientes.add(cliente);
-        System.out.println("Cliente adicionado com sucesso!");
+        return true;
+        
     }
 
 
     //método para excluir cliente por CÓDIGO (apenas)
-    public void excluirCliente() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o código do cliente que deseja excluir:");
-        String codigo = sc.nextLine();
-    
-        boolean clienteEncontrado = false;
+    // Método para excluir um cliente por código
+    public boolean excluirCliente(String codigo) {
         for (int i = 0; i < clientes.size(); i++) {
             Cliente cliente = clientes.get(i);
             if (cliente.getCodigo().equalsIgnoreCase(codigo)) {
                 clientes.remove(i);
-                clienteEncontrado = true;
-                System.out.println("Cliente excluído com sucesso!");
-                return;
+                return true; // Cliente encontrado e removido
             }
         }
-
-        System.out.println("Cliente não encontrado com o código fornecido: " + codigo);
-        
+        return false; // Cliente não encontrado
     }
 
     //método para incluir um produto
-    public void incluirProduto() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Nome do produto:");
-        String nome = sc.nextLine();
-        System.out.println("Código do produto:");
-        String codigo = sc.nextLine();
-
-        // Verificar se já existe um produto com o mesmo código
+    public boolean incluirProduto(String codigo, String nome, String descricao, byte[] foto, double preco, int quantidade) {
         for (Produto produto : produtos) {
             if (produto.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println("Já existe um produto com esse código.");
-                return;
+                return false;
+            }
         }
-    }
-
-        System.out.println("Descrição:");
-        String descricao = sc.nextLine();
-        System.out.println("Quantidade em estoque:");
-        int quantidade = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Preço:");
-        double preco = sc.nextDouble();
     
+        
         Estoque estoque = new Estoque(quantidade, preco);
-        Produto produto = new Produto(codigo, nome, descricao, new byte[0], estoque);
+        Produto produto = new Produto(codigo, nome, descricao, foto, estoque);
         produtos.add(produto);
-        System.out.println("Produto adicionado com sucesso!");
+        return true;
+    }
+
+    public boolean linkProdutoFornecedor(String codigoProduto, String codigoFornecedor) {
+        Produto produto = null;
+        Fornecedor fornecedor = null;
+        for(Produto p : produtos) {
+            if (p.getCodigo().equalsIgnoreCase(codigoProduto)) {
+                produto = p;  
+            }
+        }
+        for(Fornecedor f : fornecedores) {
+            if(f.getCodigo().equalsIgnoreCase(codigoFornecedor)) {
+                fornecedor = f;
+            }
+        }
+        if (produto == null || fornecedor == null) {
+            return false;
+        }
+        fornecedor.adicionarProduto(produto);
+        return true;
     }
 
 
-    //método para excluir um produto por CÓDIGO (apenas)
-    public void excluirProduto() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o código do produto que deseja excluir:");
-        String codigo = sc.nextLine();;
-    
-        boolean produtoEncontrado = false;
+
+    // Método para excluir um produto por código(apenas)
+    public boolean excluirProduto(String codigo) {
         for (int i = 0; i < produtos.size(); i++) {
             Produto produto = produtos.get(i);
             if (produto.getCodigo().equalsIgnoreCase(codigo)) {
                 produtos.remove(i);
-                produtoEncontrado = true;
-                System.out.println("Produto excluído com sucesso!");
-                return;
+                return true; // Produto encontrado e removido
             }
         }
-        System.out.println("Produto não encontrado com código fornecido: " + codigo);
+        return false; // Produto não encontrado
     }
     
         
     //método para consultar um produto por NOME
-    public void consultarProdutoPorNome() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o nome do produto:");
-        String nome = sc.nextLine();
-    
+    public Produto consultarProdutoPorNome(String nome) {
         for (Produto p : produtos) {
             if (p.getNome().equalsIgnoreCase(nome)) {
-                System.out.println(p.toString());
-                return;
-
+                return p; // Produto encontrado
             }
         }
-        System.out.println("Produto não encontrado com nome fornecido: " + nome);
+        return null; // Produto não encontrado
     }
     
     //método para consultar produto por CÓDIGO
-    public void consultarProdutoPorCodigo() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o código do produto:");
-        String codigo = sc.nextLine();
-
+    public Produto consultarProdutoPorCodigo(String codigo) {
         for(Produto p : produtos) {
             if (p.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println(p.toString());
-                return;
+                return p;
             }
         }
-        System.out.println("Produto não encontrado com código forncecido: " + codigo);
+        return null;
         
     }
 
 
     //método para consultar fornecedor por NOME
-    public void consultarFornecedorPorNome() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o nome do fornecedor:");
-        String nome = sc.nextLine();
-
+    public Fornecedor consultarFornecedorPorNome(String nome) {
         for (Fornecedor f : fornecedores) {
             if (f.getNome().equalsIgnoreCase(nome)) {
                 System.out.println(f.toString());
-                return;
+                return f;
             }
         }
-        System.out.println("Fornecedor não encontrado com nome fornecido: " + nome);
+        return null;
     }
 
     //método para consultar fornecedor por CÓDIGO
-    public void consultarFornecedorPorCodigo() {
-        Scanner sc = new Scanner (System.in);
-        System.out.println("Digite o código do fornecedor:");
-        String codigo = sc.nextLine();
-
+    public Fornecedor consultarFornecedorPorCodigo(String codigo) {
         for(Fornecedor f : fornecedores) {
             if (f.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println(f.toString());
-                return;
+                return f;
             }
         }
-        System.out.println("Fornecedor não encontrado com código forncecido: " + codigo);
+        return null;
         
     }
 
 
     //método para consultar cliente por NOME
-    public void consultarClientePorNome() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o nome do cliente:");
-        String nome = sc.nextLine();
-
+    public Cliente consultarClientePorNome(String nome) {
         for (Cliente c : clientes) {
             if (c.getNome().equalsIgnoreCase(nome)) {
                 System.out.println(c.toString());
-                return;
+                return c;
             }
         }
-        System.out.println("Cliente não encontrado com nome fornecido: " + nome);
+        return null;
     }
 
     //método para consultar cliente por CÓDIGO
-    public void consultarClientePorCodigo() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o código do cliente:");
-        String codigo = sc.nextLine();
-
+    public Cliente consultarClientePorCodigo(String codigo) {
         for (Cliente c : clientes) {
             if (c.getCodigo().equalsIgnoreCase(codigo)) {
                 System.out.println(c.toString());
-                return;
+                return c;
             }
         }
-        System.out.println("Cliente não encontrado com nome fornecido: " + codigo);
+        return null;
     }
-
-
-
+ 
     //método para alterar fornecedor 
     public void alterarFornecedor() {
         Scanner sc = new Scanner(System.in);
@@ -463,6 +378,23 @@ public class Sistema {
         }
         System.out.println("Cliente não econtrado com nome fornecido: " + nome);
         
+    }
+
+    private static Endereco lerEndereco() {
+        String rua = lerString("Rua:");
+        String numero = lerString("Número:");
+        String complemento = lerString("Complemento:");
+        String bairro = lerString("Bairro:");
+        String cidade = lerString("Cidade:");
+        String cep = lerString("CEP:");
+        String estado = lerString("Estado:");
+        return new Endereco(rua, numero, complemento, bairro, cidade, cep, estado);
+    }
+
+    private static String lerString(String mensagem) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(mensagem);
+        return sc.nextLine();
     }
 
 }

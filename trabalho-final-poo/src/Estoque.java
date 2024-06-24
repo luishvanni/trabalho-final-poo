@@ -3,9 +3,9 @@ public class Estoque{
     private Double preco;
 
     
-    public Estoque(Integer quantidade, Double preco) {
+    public Estoque(Integer quantidade, double preco2) {
         this.quantidade = quantidade;
-        this.preco = preco;
+        this.preco = (double) preco2;
     }
 
     public Integer getQuantidade() {

@@ -88,6 +88,7 @@ public class Menu {
             System.out.println("1. Incluir Fornecedor");
             System.out.println("2. Incluir Cliente");
             System.out.println("3. Incluir Produto");
+            System.out.println("4. Lincar fornecedor e produto");
             System.out.println("0. Voltar");
             System.out.println("----------------------------------------");
             System.out.print("Escolha uma opção: ");
@@ -96,14 +97,78 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    sistema.incluirFornecedor();
+                    System.out.println("Nome do fornecedor:");
+                    String nome = sc.nextLine();
+                    System.out.println("Código:");
+                    String codigo = sc.nextLine();
+                    System.out.println("Descrição:");
+                    String descricao = sc.nextLine();
+                    System.out.println("Telefone:");
+                    String telefone = sc.nextLine();
+                    System.out.println("Email:");
+                    String email = sc.nextLine();
+
+                    Endereco endereco = lerEndereco();
+
+                    if (sistema.incluirFornecedor(nome, codigo, descricao, telefone, email, endereco)) {
+                        System.out.println("Fornecedor incluido com sucesso!");
+                    } else {
+                        System.out.println("Erro ao incluir forncedor!");
+                    }
                     break;
                 case 2:
-                    sistema.incluirCliente();
+                    System.out.println("Nome do cliente:");
+                    String nomeCliente = sc.nextLine();
+                    System.out.println("Código:");
+                    String codigoCliente = sc.nextLine();
+                    System.out.println("Telefone:");
+                    String telefoneCliente = sc.nextLine();
+                    System.out.println("E-mail:");
+                    String emailCliente = sc.nextLine();
+                    System.out.println("Cartão de crédito:");
+                    String cartaoCredito = sc.nextLine();
+
+                    Endereco enderecoCliente = lerEndereco();
+
+                    if (sistema.incluirCliente(nomeCliente, codigoCliente, telefoneCliente, emailCliente, cartaoCredito,
+                            enderecoCliente)) {
+                        System.out.println("Cliente incluido com sucesso!");
+                    } else {
+                        System.out.println("Erro ao incluir cliente!");
+                    }
+
                     break;
                 case 3:
-                    sistema.incluirProduto();
+                    System.out.println("Código do produto:");
+                    String codigoProduto = sc.nextLine();
+                    System.out.println("Nome do produto:");
+                    String nomeProduto = sc.nextLine();
+                    System.out.println("Descrição:");
+                    String descricaoProduto = sc.nextLine();
+                    System.out.println("Quantidade em estoque:");
+                    int quantidade = sc.nextInt();
+                    sc.nextLine();
+                    System.out.println("Preço:");
+                    double preco = sc.nextDouble();
+
+                    if (sistema.incluirProduto(codigoProduto, nomeProduto, descricaoProduto, null, preco, quantidade)) {
+                        System.out.println("Produto incluido com sucesso!");
+                    } else {
+                        System.out.println("Erro ao incluir produto!");
+                    }
+
                     break;
+                case 4:
+                    System.out.println("Código do produto:");
+                    String codigoProdutoLink = sc.nextLine();
+                    System.out.println("Código do fornecedor:");
+                    String codigoFornecedor = sc.nextLine();
+
+                    if (sistema.linkProdutoFornecedor(codigoProdutoLink, codigoFornecedor)) {
+                        System.out.println("Produto linkado com fornecedor com sucesso!");
+                    } else {
+                        System.out.println("Erro ao linkar produto com fornecedor!");
+                    }
                 case 0:
                     System.out.println("Voltando ao menu interno...");
                     break;
@@ -130,15 +195,39 @@ public class Menu {
             sc.nextLine();
 
             switch (opcao) {
-                case 1:
-                    sistema.excluirFornecedor();
+                case 1: {
+                    System.out.println("Digite o código do fornecedor que deseja excluir:");
+                    String codigo = sc.nextLine();
+
+                    if (sistema.excluirFornecedor(codigo)) {
+                        System.out.println("Fornecedor excluído com sucesso!");
+                    } else {
+                        System.out.println("Fornecedor não encontrado com o código fornecido: " + codigo);
+                    }
                     break;
-                case 2:
-                    sistema.excluirCliente();
+                }
+                case 2: {
+                    System.out.println("Digite o código do cliente que deseja excluir:");
+                    String codigo = sc.nextLine();
+
+                    if (sistema.excluirCliente(codigo)) {
+                        System.out.println("Cliente excluído com sucesso!");
+                    } else {
+                        System.out.println("Cliente não encontrado com o código fornecido: " + codigo);
+                    }
                     break;
-                case 3:
-                    sistema.excluirProduto();
+                }
+                case 3: {
+                    System.out.println("Digite o código do produto que deseja excluir:");
+                    String codigo = sc.nextLine();
+
+                    if (sistema.excluirProduto(codigo)) {
+                        System.out.println("Produto excluído com sucesso!");
+                    } else {
+                        System.out.println("Produto não encontrado com o código fornecido: " + codigo);
+                    }
                     break;
+                }
                 case 0:
                     System.out.println("Voltando ao menu interno...");
                     break;
@@ -169,23 +258,79 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    sistema.consultarProdutoPorNome();
+                    System.out.println("Digite o nome do produto:");
+                    String nome = sc.nextLine();
+
+                    Produto produto = sistema.consultarProdutoPorNome(nome);
+                    if (produto != null) {
+                        System.out.println(produto.toString());
+                    } else {
+                        System.out.println("Produto não encontrado com o nome fornecido: " + nome);
+                    }
                     break;
+
                 case 2:
-                    sistema.consultarProdutoPorCodigo();
+                    System.out.println("Digite o código do produto:");
+                    String codigo = sc.nextLine();
+
+                    Produto produtoCodigo = sistema.consultarProdutoPorCodigo(codigo);
+                    if (produtoCodigo != null) {
+                        System.out.println(produtoCodigo.toString());
+                    } else {
+                        System.out.println("Produto não encontrado com o nome fornecido: " + codigo);
+                    }
                     break;
+
                 case 3:
-                    sistema.consultarFornecedorPorNome();
+                    System.out.println("Digite o nome do fornecedor:");
+                    String nomeFornecedor = sc.nextLine();
+
+                    Fornecedor fornecedor = sistema.consultarFornecedorPorNome(nomeFornecedor);
+                    if (fornecedor != null) {
+                        System.out.println(nomeFornecedor.toString());
+                    } else {
+                        System.out.println("Fornecedor não encontrado com o nome fornecido: " + nomeFornecedor);
+                    }
+
                     break;
+
                 case 4:
-                    sistema.consultarFornecedorPorCodigo();
+                    System.out.println("Digite o código do fornecedor:");
+                    String codigoFornecedor = sc.nextLine();
+
+                    Fornecedor fornecedorCodigo = sistema.consultarFornecedorPorCodigo(codigoFornecedor);
+                    if (fornecedorCodigo != null) {
+                        System.out.println(codigoFornecedor.toString());
+                    } else {
+                        System.out.println("Fornecedor não encontrado com o código fornecido: " + codigoFornecedor);
+                    }
+
                     break;
+
                 case 5:
-                    sistema.consultarClientePorNome();
+                    System.out.println("Digite o nome do cliente:");
+                    String nomeCliente = sc.nextLine();
+
+                    Cliente cliente = sistema.consultarClientePorNome(nomeCliente);
+                    if (cliente != null) {
+                        System.out.println(nomeCliente.toString());
+                    } else {
+                        System.out.println("Cliente não encontrado com nome fornecido: " + nomeCliente);
+                    }
                     break;
+
                 case 6:
-                    sistema.consultarClientePorCodigo();
+                    System.out.println("Digite o código do cliente:");
+                    String codigoCliente = sc.nextLine();
+
+                    Cliente clienteCodigo = sistema.consultarClientePorCodigo(codigoCliente);
+                    if (clienteCodigo != null) {
+                        System.out.println(codigoCliente.toString());
+                    } else {
+                        System.out.println("Cliente não encontrado com nome fornecido: " + codigoCliente);
+                    }
                     break;
+
                 case 0:
                     System.out.println("Voltando ao menu interno...");
                     break;
@@ -227,7 +372,8 @@ public class Menu {
                 default:
                     System.out.println("Opção inválida! Tente novamente.");
             }
-        } while (opcao != 0);
+        }while(opcao!=0);
+
     }
 
     public static void exibirMenuCliente(Sistema sistema, Scanner sc) {
@@ -247,19 +393,39 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("== Consultar Produto por Nome ==");
-                    sistema.consultarProdutoPorNome();
+                    sistema.alterarFornecedor();
                     break;
                 case 2:
-                    System.out.println("== Consultar Produto por Código ==");
-                    sistema.consultarProdutoPorCodigo();
+                    sistema.alterarCliente();
+                    break;
+                case 3:
+                    sistema.alterarProduto();
                     break;
                 case 0:
-                    System.out.println("Saindo...");
+                    System.out.println("Voltando ao menu interno...");
                     break;
                 default:
                     System.out.println("Opção inválida! Tente novamente.");
             }
         } while (opcao != 0);
+    }
+
+    // Métodos para entrada de dados
+
+    private static String lerString(String mensagem) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(mensagem);
+        return sc.nextLine();
+    }
+
+    private static Endereco lerEndereco() {
+        String rua = lerString("Rua:");
+        String numero = lerString("Número:");
+        String complemento = lerString("Complemento:");
+        String bairro = lerString("Bairro:");
+        String cidade = lerString("Cidade:");
+        String cep = lerString("CEP:");
+        String estado = lerString("Estado:");
+        return new Endereco(rua, numero, complemento, bairro, cidade, cep, estado);
     }
 }
