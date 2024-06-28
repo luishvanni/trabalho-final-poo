@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Sistema {
     
@@ -199,202 +198,86 @@ public class Sistema {
     }
  
     //método para alterar fornecedor 
-    public void alterarFornecedor() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o nome do fornecedor que deseja alterar:");
-        String nome = sc.nextLine();
-    
+    public boolean alterarFornecedor(String nome, int opcao, String novoValor, Endereco novoEndereco) {
         for (Fornecedor fornecedor : fornecedores) {
             if (fornecedor.getNome().equalsIgnoreCase(nome)) {
-                boolean continuarAlterando = true;
-                while (continuarAlterando) {
-                    System.out.println("O que deseja alterar?");
-                    System.out.println("1. Nome");
-                    System.out.println("2. Descrição");
-                    System.out.println("3. Telefone");
-                    System.out.println("4. Email");
-                    System.out.println("5. Endereço");
-                    System.out.println("6. Sair");
-    
-                    int opcao = sc.nextInt();
-                    sc.nextLine(); // limpa o scanner
-    
-                    switch (opcao) {
-                        case 1:
-                            System.out.println("Novo nome:");
-                            String novoNome = sc.nextLine();
-                            fornecedor.setNome(novoNome);
-                            break;
-                        case 2:
-                            System.out.println("Nova descrição:");
-                            String novaDescricao = sc.nextLine();
-                            fornecedor.setDescricao(novaDescricao);
-                            break;
-                        case 3:
-                            System.out.println("Novo telefone:");
-                            String novoTelefone = sc.nextLine();
-                            fornecedor.setTelefone(novoTelefone);
-                            break;
-                        case 4:
-                            System.out.println("Novo email:");
-                            String novoEmail = sc.nextLine();
-                            fornecedor.setEmail(novoEmail);
-                            break;
-                        case 5:
-                            System.out.println("Novo endereço:");
-                
-                            Endereco novoEndereco = lerEndereco();
-                            fornecedor.setEndereco(novoEndereco);
-                            break;
-                        case 6:
-                            continuarAlterando = false;
-                            break;
-                        default:
-                            System.out.println("Opção inválida.");
-                            break;
-                    }
+                switch (opcao) {
+                    case 1:
+                        fornecedor.setNome(novoValor);
+                        break;
+                    case 2:
+                        fornecedor.setDescricao(novoValor);
+                        break;
+                    case 3:
+                        fornecedor.setTelefone(novoValor);
+                        break;
+                    case 4:
+                        fornecedor.setEmail(novoValor);
+                        break;
+                    case 5:
+                        fornecedor.setEndereco(novoEndereco);
+                        break;
+                    default:
+                        return false; // opção inválida
                 }
-                System.out.println("Fornecedor alterado com sucesso!");
-                return;
-            
-            } 
-            System.out.println("Fornecedor não encontrado com o nome forncecido: " + nome);
-
+                return true; // alteração bem-sucedida
+            }
         }
+        return false; // fornecedor não encontrado
     }
 
     //método para alterar produto
-    public void alterarProduto() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o código do produto que deseja alterar:");
-        String codigo = sc.nextLine();
-    
+    public boolean alterarProduto(String codigo, int opcao, String novoValor, int novaQuantidade, double novoPreco) {
         for (Produto p : produtos) {
             if (p.getCodigo().equalsIgnoreCase(codigo)) {
-                boolean produtoEncontrado = true;
-                while (produtoEncontrado) {
-                    System.out.println("O que deseja alterar?");
-                    System.out.println("1. Nome");
-                    System.out.println("2. Descrição");
-                    System.out.println("3. Quantidade em estoque");
-                    System.out.println("4. Preço");
-                    System.out.println("5. Sair");
-    
-                    int opcao = sc.nextInt();
-                    sc.nextLine(); 
-    
-                    switch (opcao) {
-                        case 1:
-                            System.out.println("Novo nome:");
-                            String novoNome = sc.nextLine();
-                            p.setNome(novoNome);
-                            break;
-                        case 2:
-                            System.out.println("Nova descrição:");
-                            String novaDescricao = sc.nextLine();
-                            p.setDescricao(novaDescricao);
-                            break;
-                        case 3:
-                            System.out.println("Nova quantidade em estoque:");
-                            int novaQuantidade = sc.nextInt();
-                            p.getEstoque().setQuantidade(novaQuantidade);
-                            break;
-                        case 4:
-                            System.out.println("Novo preço:");
-                            double novoPreco = sc.nextDouble();
-                            p.getEstoque().setPreco(novoPreco);
-                            break;
-                        case 5:
-                            System.out.println("Produto alterado com sucesso!");
-                            return;
-                        default:
-                            System.out.println("Opção inválida.");
-                            return;
-                    }
+                switch (opcao) {
+                    case 1:
+                        p.setNome(novoValor);
+                        break;
+                    case 2:
+                        p.setDescricao(novoValor);
+                        break;
+                    case 3:
+                        p.getEstoque().setQuantidade(novaQuantidade);
+                        break;
+                    case 4:
+                        p.getEstoque().setPreco(novoPreco);
+                        break;
+                    default:
+                        return false; // opção inválida
                 }
+                return true; // alteração bem-sucedida
             }
         }
-        System.out.println("Produto não econtrado com código fornecido: " + codigo);
+        return false; // produto não encontrado
     }
 
     //método para alterar cliente
-    public void alterarCliente() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o nome do cliente que deseja alterar:");
-        String nome = sc.nextLine();
-    
-        
+    public boolean alterarCliente(String nome, int opcao, String novoValor, Endereco novoEndereco) {
         for (Cliente cliente : clientes) {
             if (cliente.getNome().equalsIgnoreCase(nome)) {
-                boolean clienteEncontrado = true;
-                while (clienteEncontrado) {
-                    System.out.println("O que deseja alterar?");
-                    System.out.println("1. Nome");
-                    System.out.println("2. Telefone");
-                    System.out.println("3. Email");
-                    System.out.println("4. Cartão de Crédito");
-                    System.out.println("5. Endereço");
-                    System.out.println("6. Sair");
-    
-                    int opcao = sc.nextInt();
-                    sc.nextLine(); 
-    
-                    switch (opcao) {
-                        case 1:
-                            System.out.println("Novo nome:");
-                            String novoNome = sc.nextLine();
-                            cliente.setNome(novoNome);
-                            break;
-                        case 2:
-                            System.out.println("Novo telefone:");
-                            String novoTelefone = sc.nextLine();
-                            cliente.setTelefone(novoTelefone);
-                            break;
-                        case 3:
-                            System.out.println("Novo email:");
-                            String novoEmail = sc.nextLine();
-                            cliente.setEmail(novoEmail);
-                            break;
-                        case 4:
-                            System.out.println("Novo cartão de crédito:");
-                            String novoCartaoCredito = sc.nextLine();
-                            cliente.setCartaoCredito(novoCartaoCredito);
-                            break;
-                        case 5:
-                            System.out.println("Novo endereço:");
-
-                            Endereco novoEndereco = lerEndereco();
-                            cliente.setEndereco(novoEndereco);
-                            break;
-                        case 6:
-                            System.out.println("Cliente alterado com sucesso!");
-                            return;
-                        default:
-                            System.out.println("Opção inválida.");
-                            break;
-                    }
+                switch (opcao) {
+                    case 1:
+                        cliente.setNome(novoValor);
+                        break;
+                    case 2:
+                        cliente.setTelefone(novoValor);
+                        break;
+                    case 3:
+                        cliente.setEmail(novoValor);
+                        break;
+                    case 4:
+                        cliente.setCartaoCredito(novoValor);
+                        break;
+                    case 5:
+                        cliente.setEndereco(novoEndereco);
+                        break;
+                    default:
+                        return false; // opção inválida
                 }
+                return true; // alteração bem-sucedida
             }
         }
-        System.out.println("Cliente não econtrado com nome fornecido: " + nome);
-        
+        return false; // cliente não encontrado
     }
-
-    private static Endereco lerEndereco() {
-        String rua = lerString("Rua:");
-        String numero = lerString("Número:");
-        String complemento = lerString("Complemento:");
-        String bairro = lerString("Bairro:");
-        String cidade = lerString("Cidade:");
-        String cep = lerString("CEP:");
-        String estado = lerString("Estado:");
-        return new Endereco(rua, numero, complemento, bairro, cidade, cep, estado);
-    }
-
-    private static String lerString(String mensagem) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println(mensagem);
-        return sc.nextLine();
-    }
-
 }

@@ -358,14 +358,97 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    sistema.alterarFornecedor();
+                    alterarFornecedor(sc, sistema);
                     break;
                 case 2:
-                    sistema.alterarCliente();
-                    break;
+                    System.out.println("Digite o nome do cliente que deseja alterar:");
+                    String nomeCliente = sc.nextLine();
+            
+                    while (true) {
+                        System.out.println("O que deseja alterar?");
+                        System.out.println("1. Nome");
+                        System.out.println("2. Telefone");
+                        System.out.println("3. Email");
+                        System.out.println("4. Cartão de Crédito");
+                        System.out.println("5. Endereço");
+                        System.out.println("6. Sair");
+            
+                        int opcaoCliente = sc.nextInt();
+                        sc.nextLine(); // limpa o scanner
+            
+                        if (opcaoCliente == 6) {
+                            break;
+                        }
+            
+                        String novoValor = "";
+                        Endereco novoEndereco = null;
+            
+                        if (opcaoCliente >= 1 && opcaoCliente <= 4) {
+                            System.out.println("Digite o novo valor:");
+                            novoValor = sc.nextLine();
+                        } else if (opcaoCliente == 5) {
+                            novoEndereco = lerEndereco();
+                        } else {
+                            System.out.println("Opção inválida.");
+                            continue;
+                        }
+            
+                        boolean sucesso = sistema.alterarCliente(nomeCliente, opcaoCliente, novoValor, novoEndereco);
+                        if (sucesso) {
+                            System.out.println("Cliente alterado com sucesso!");
+                        } else {
+                            System.out.println("Cliente não encontrado ou opção inválida.");
+                        }
+                        sistema.alterarCliente(nomeCliente, opcaoCliente, novoValor, novoEndereco);
+                    }
+                        break;
                 case 3:
-                    sistema.alterarProduto();
-                    break;
+                    System.out.println("Digite o código do produto que deseja alterar:");
+                    String codigo = sc.nextLine();
+            
+                    while (true) {
+                        System.out.println("O que deseja alterar?");
+                        System.out.println("1. Nome");
+                        System.out.println("2. Descrição");
+                        System.out.println("3. Quantidade em estoque");
+                        System.out.println("4. Preço");
+                        System.out.println("5. Sair");
+            
+                        int opcaoProduto = sc.nextInt();
+                        sc.nextLine(); // limpa o scanner
+            
+                        if (opcaoProduto == 5) {
+                            break;
+                        }
+            
+                        String novoValor = "";
+                        int novaQuantidade = 0;
+                        double novoPreco = 0.0;
+            
+                        if (opcaoProduto == 1 || opcaoProduto == 2) {
+                            System.out.println("Digite o novo valor:");
+                            novoValor = sc.nextLine();
+                        } else if (opcaoProduto == 3) {
+                            System.out.println("Nova quantidade em estoque:");
+                            novaQuantidade = sc.nextInt();
+                            sc.nextLine(); // limpa o scanner
+                        } else if (opcaoProduto == 4) {
+                            System.out.println("Novo preço:");
+                            novoPreco = sc.nextDouble();
+                            sc.nextLine(); // limpa o scanner
+                        } else {
+                            System.out.println("Opção inválida.");
+                            continue;
+                        }
+            
+                        boolean sucesso = sistema.alterarProduto(codigo, opcaoProduto, novoValor, novaQuantidade, novoPreco);
+                        if (sucesso) {
+                            System.out.println("Produto alterado com sucesso!");
+                        } else {
+                            System.out.println("Produto não encontrado ou opção inválida.");
+                        }
+                    }
+                        break;
                 case 0:
                     System.out.println("Voltando ao menu interno...");
                     break;
@@ -383,8 +466,8 @@ public class Menu {
             System.out.println("----------------------------------------");
             System.out.println("             MENU CLIENTE               ");
             System.out.println("----------------------------------------");
-            System.out.println("1. Consultar Produto por Nome");
-            System.out.println("2. Consultar Produto por Código");
+            System.out.println("1.");
+            System.out.println("2.");
             System.out.println("0. Sair");
             System.out.println("----------------------------------------");
             System.out.print("Escolha uma opção: ");
@@ -393,21 +476,63 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    sistema.alterarFornecedor();
+                    
                     break;
                 case 2:
-                    sistema.alterarCliente();
+                    
                     break;
                 case 3:
-                    sistema.alterarProduto();
+                    
                     break;
                 case 0:
-                    System.out.println("Voltando ao menu interno...");
+                    //System.out.println("Voltando ao menu interno...");
                     break;
                 default:
-                    System.out.println("Opção inválida! Tente novamente.");
+                    //System.out.println("Opção inválida! Tente novamente.");
             }
         } while (opcao != 0);
+    }
+
+    private static void alterarFornecedor(Scanner sc, Sistema sistema) {
+        System.out.println("Digite o nome do fornecedor que deseja alterar:");
+        String nome = sc.nextLine();
+
+        while (true) {
+            System.out.println("O que deseja alterar?");
+            System.out.println("1. Nome");
+            System.out.println("2. Descrição");
+            System.out.println("3. Telefone");
+            System.out.println("4. Email");
+            System.out.println("5. Endereço");
+            System.out.println("6. Sair");
+
+            int opcao = sc.nextInt();
+            sc.nextLine(); // limpa o scanner
+
+            if (opcao == 6) {
+                break;
+            }
+
+            String novoValor = "";
+            Endereco novoEndereco = null;
+
+            if (opcao >= 1 && opcao <= 4) {
+                System.out.println("Digite o novo valor:");
+                novoValor = sc.nextLine();
+            } else if (opcao == 5) {
+                novoEndereco = lerEndereco();
+            } else {
+                System.out.println("Opção inválida.");
+                continue;
+            }
+
+            boolean sucesso = sistema.alterarFornecedor(nome, opcao, novoValor, novoEndereco);
+            if (sucesso) {
+                System.out.println("Fornecedor alterado com sucesso!");
+            } else {
+                System.out.println("Fornecedor não encontrado ou opção inválida.");
+            }
+        }
     }
 
     // Métodos para entrada de dados
