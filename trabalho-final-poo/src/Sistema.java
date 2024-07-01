@@ -1,22 +1,24 @@
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Sistema {
     
     private ArrayList<Fornecedor> fornecedores;
     private ArrayList<Produto> produtos;
     private ArrayList<Cliente> clientes;
+    private List<Pedido> pedidos;
+    private List<ItemPedido> carrinho;
 
-    
     public Sistema() {
         fornecedores = new ArrayList<>();
         produtos = new ArrayList<>();
         clientes = new ArrayList<>();
-        
+        pedidos = new ArrayList<>();
+        carrinho = new ArrayList<>();
+
     }
 
-    
-
-   
 
     // Método para incluir um fornecedor
     public boolean incluirFornecedor(String nome, String codigo, String descricao, String telefone, String email, Endereco endereco) {
@@ -218,9 +220,9 @@ public class Sistema {
                         fornecedor.setEndereco(novoEndereco);
                         break;
                     default:
-                        return false; // opção inválida
+                        return false; 
                 }
-                return true; // alteração bem-sucedida
+                return true; 
             }
         }
         return false; // fornecedor não encontrado
@@ -244,9 +246,9 @@ public class Sistema {
                         p.getEstoque().setPreco(novoPreco);
                         break;
                     default:
-                        return false; // opção inválida
+                        return false; 
                 }
-                return true; // alteração bem-sucedida
+                return true;  
             }
         }
         return false; // produto não encontrado
@@ -273,11 +275,118 @@ public class Sistema {
                         cliente.setEndereco(novoEndereco);
                         break;
                     default:
-                        return false; // opção inválida
+                        return false; 
                 }
-                return true; // alteração bem-sucedida
+                return true; 
             }
         }
         return false; // cliente não encontrado
+    } 
+
+     // Adiciona um produto ao sistema
+     public void adicionarProduto(Produto produto) {
+        produtos.add(produto);
+    }
+
+    // Adiciona um pedido ao sistema
+    public void adicionarPedido(Pedido pedido) {
+        pedidos.add(pedido);
+    }
+
+    // Pesquisa um produto por código ou palavra-chave
+    public List<Produto> pesquisarProduto(String termo) {
+        List<Produto> resultado = new ArrayList<>();
+        for (Produto produto : produtos) {
+            if (produto.getCodigo().contains(termo) || produto.getNome().contains(termo) || produto.getDescricao().contains(termo)) {
+                resultado.add(produto);
+            }
+        }
+        return resultado;
+    }
+
+    // Consulta um pedido por número
+    public Pedido consultarPedidoPorNumero(int numero) {
+        for (Pedido pedido : pedidos) {
+            if (pedido.getNumero() == numero) {
+                return pedido;
+            }
+        }
+        return null;
+    }
+
+    // Consulta pedidos por intervalo de datas
+    public List<Pedido> consultarPedidosPorData(Date inicio, Date fim) {
+        List<Pedido> resultado = new ArrayList<>();
+        for (Pedido pedido : pedidos) {
+            if (!pedido.getDataPedido().before(inicio) && !pedido.getDataPedido().after(fim)) {
+                resultado.add(pedido);
+            }
+        }
+        return resultado;
+    }
+
+    public void realizarPedido() {
+        if (carrinho.isEmpty()) {
+            System.out.println("O carrinho está vazio.");
+            return;
+        }
+    
+        int numeroPedido = pedidos.size() + 1;  // Exemplo para gerar número sequencial
+        Date dataPedido = new Date();
+        Date dataEntrega = new Date(); // Data prevista de entrega, pode ser ajustada conforme necessidade
+        String situacao = "NOVO";
+    
+        // Calcula o valor total do pedido com ICMS
+        double valorTotal = 0;
+        for (ItemPedido item : carrinho) {
+            valorTotal += item.getPreco();
+        }
+        valorTotal *= 1.17;  // Adiciona 17% de ICMS
+    
+        // Cria o pedido com valor total calculado
+        Pedido pedido = new Pedido(numeroPedido, dataPedido, dataEntrega, situacao, carrinho, valorTotal);
+    
+        // Adiciona o pedido à lista
+        adicionarPedido(pedido);
+    
+        // Limpa o carrinho após a realização do pedido
+        //carrinho.clear();
+        System.out.println("Pedido realizado com sucesso! Número do pedido: " + numeroPedido + ", Valor total: " + String.format("%.2f", valorTotal));
+    }
+
+    // Adiciona um produto ao carrinho
+    public void adicionarProdutoAoCarrinho(Produto produto, int quantidade) {
+        if (produto.getEstoque().getQuantidade() < quantidade) {
+            System.out.println("Quantidade solicitada é maior que o estoque disponível. Quantidade máxima disponível: " + produto.getEstoque().getQuantidade());
+            return;
+        }
+
+        double preco = produto.getEstoque().getPreco() * quantidade;
+        ItemPedido itemPedido = new ItemPedido(produto, null, quantidade, preco);
+        carrinho.add(itemPedido);
+        produto.getEstoque().setQuantidade(produto.getEstoque().getQuantidade() - quantidade);
+        System.out.println("Produto adicionado ao carrinho.");
+    }
+
+    // Mostra a lista de produtos disponíveis
+    public void mostrarProdutos(List<Produto> produtos) {
+        for (int i = 0; i < produtos.size(); i++) {
+            Produto produto = produtos.get(i);
+            System.out.println(i + 1 + ". Código: " + produto.getCodigo() + ", Nome: " + produto.getNome() + ", Descrição: " + produto.getDescricao() + ", Preço: " + produto.getEstoque().getPreco() + ", Estoque: " + produto.getEstoque().getQuantidade());
+        }
+    }
+
+    public void visualizarPedido(int numero) {
+        Pedido pedido = this.pedidos.stream()
+            .filter(p -> p.getNumero() == numero)
+            .findFirst()
+            .orElse(null);
+    
+        if (pedido != null) {
+            System.out.println(pedido);
+            System.out.println(pedido.exibirItens());  // Adicionado para exibir os itens do pedido
+        } else {
+            System.out.println("Pedido não encontrado.");
+        }
     }
 }

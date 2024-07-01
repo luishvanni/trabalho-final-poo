@@ -1,3 +1,6 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -466,8 +469,9 @@ public class Menu {
             System.out.println("----------------------------------------");
             System.out.println("             MENU CLIENTE               ");
             System.out.println("----------------------------------------");
-            System.out.println("1.");
-            System.out.println("2.");
+            System.out.println("1. Consultar produto");
+            System.out.println("2. Realizar pedido");
+            System.out.println("3. Consultar pedidos");
             System.out.println("0. Sair");
             System.out.println("----------------------------------------");
             System.out.print("Escolha uma opção: ");
@@ -476,19 +480,104 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    
+                    System.out.print("Digite o código ou uma palavra-chave para pesquisa: ");
+                    String termo = sc.nextLine();
+                    List<Produto> resultado = sistema.pesquisarProduto(termo);
+        
+                    if (resultado.isEmpty()) {
+                        System.out.println("Nenhum produto encontrado.");
+                        break;
+                    }
+        
+                    sistema.mostrarProdutos(resultado);
+        
+                    System.out.print("Digite o número do produto para adicionar ao carrinho ou 0 para voltar ao menu: ");
+                    int escolhaProduto = sc.nextInt();
+                    sc.nextLine();  // Consumir a nova linha
+        
+                    if (escolhaProduto == 0) {
+                        break;
+                    }
+        
+                    if (escolhaProduto < 1 || escolhaProduto > resultado.size()) {
+                        System.out.println("Produto inválido.");
+                        break;
+                    }
+        
+                    Produto produtoEscolhido = resultado.get(escolhaProduto - 1);
+        
+                    System.out.print("Digite a quantidade desejada: ");
+                    int quantidade = sc.nextInt();
+                    sc.nextLine();  // Consumir a nova linha
+        
+                    if (produtoEscolhido.getEstoque().getQuantidade() >= quantidade) {
+                        double precoTotal = produtoEscolhido.getEstoque().getPreco() * quantidade;
+                        System.out.println("Total do item: " + String.format("%.2f", precoTotal));
+                        System.out.print("Deseja confirmar a adição ao carrinho? (s/n): ");
+                        String confirmar = sc.nextLine();
+        
+                        if (confirmar.equalsIgnoreCase("s")) {
+                            sistema.adicionarProdutoAoCarrinho(produtoEscolhido, quantidade);
+                        }
+                    } else {
+                        System.out.println("Quantidade solicitada é maior do que a disponível em estoque.");
+                    }
                     break;
+        
                 case 2:
-                    
+                    sistema.realizarPedido();
                     break;
+        
                 case 3:
-                    
+                    System.out.println("1. Consultar por número do pedido");
+                    System.out.println("2. Consultar por intervalo de datas");
+                    System.out.print("Escolha uma opção: ");
+                    int escolhaPedido = sc.nextInt();
+                    sc.nextLine();  // Consumir a nova linha
+        
+                    switch (escolhaPedido) {
+                        case 1:
+                            System.out.print("Digite o número do pedido (número na lista): ");
+                            int numero = sc.nextInt();
+                            sc.nextLine();  // Consumir a nova linha
+                            sistema.visualizarPedido(numero);
+                            break;
+        
+                        case 2:
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                            System.out.print("Digite a data de início (dd-MM-yyyy): ");
+                            String dataInicioStr = sc.nextLine();
+                            System.out.print("Digite a data de fim (dd-MM-yyyy): ");
+                            String dataFimStr = sc.nextLine();
+        
+                            try {
+                                Date dataInicio = formatter.parse(dataInicioStr);
+                                Date dataFim = formatter.parse(dataFimStr);
+                                List<Pedido> pedidos = sistema.consultarPedidosPorData(dataInicio, dataFim);
+        
+                                if (pedidos.isEmpty()) {
+                                    System.out.println("Nenhum pedido encontrado nesse intervalo.");
+                                } else {
+                                    for (Pedido p : pedidos) {
+                                        System.out.println(p);
+                                    }
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Formato de data inválido.");
+                            }
+                            break;
+        
+                        default:
+                            System.out.println("Opção inválida.");
+                    }
                     break;
+        
                 case 0:
-                    //System.out.println("Voltando ao menu interno...");
+                    System.out.println("Voltando ao menu interno...");
                     break;
+        
                 default:
-                    //System.out.println("Opção inválida! Tente novamente.");
+                    System.out.println("Opção inválida! Tente novamente.");
             }
         } while (opcao != 0);
     }
