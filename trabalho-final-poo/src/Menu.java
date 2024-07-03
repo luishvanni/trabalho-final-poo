@@ -1,5 +1,5 @@
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -253,6 +253,10 @@ public class Menu {
             System.out.println("4. Consultar Fornecedor por Código");
             System.out.println("5. Consultar Cliente por Nome");
             System.out.println("6. Consultar Cliente por Código");
+            System.out.println("7. Consultar Pedido por Código");
+            System.out.println("8. Consultar Pedido por Data");
+            System.out.println("9. Confirmar entrega pedido");
+            System.out.println("10. Cancelar pedido");
             System.out.println("0. Voltar");
             System.out.println("----------------------------------------");
             System.out.print("Escolha uma opção: ");
@@ -328,9 +332,64 @@ public class Menu {
 
                     Cliente clienteCodigo = sistema.consultarClientePorCodigo(codigoCliente);
                     if (clienteCodigo != null) {
-                        System.out.println(codigoCliente.toString());
+                        System.out.println(clienteCodigo.toString());
                     } else {
-                        System.out.println("Cliente não encontrado com nome fornecido: " + codigoCliente);
+                        System.out.println("Cliente não encontrado com código fornecido: " + codigoCliente);
+                    }
+                    break;
+                case 7:
+                    System.out.println("Digite o número do pedido:");
+                    int numeroPedido = sc.nextInt();
+                    sc.nextLine();
+
+                    Pedido pedido = sistema.consultarPedidoPorNumero(numeroPedido);
+                    if (pedido != null) {
+                        System.out.println(pedido.toString());
+                    } else {
+                        System.out.println("Pedido não encontrado com o número fornecido: " + numeroPedido);
+                    }
+                    break;
+
+                case 8:
+                    System.out.println("Digite a data do pedido (yyyy-mm-dd):");
+                    String dataStr = sc.nextLine();
+
+                    try {
+                        Date dataPedido = Date.valueOf(dataStr);
+                        ArrayList<Pedido> pedidos = sistema.consultarPedidosPorData(dataPedido);
+                        if (pedidos != null && !pedidos.isEmpty()) {
+                            for (Pedido p : pedidos) {
+                                System.out.println(p.toString());
+                                System.out.println("----------------------------------------");
+                            }
+                        } else {
+                            System.out.println("Nenhum pedido encontrado para a data fornecida: " + dataStr);
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Formato de data inválido. Por favor, use o formato yyyy-mm-dd.");
+                    }
+                    break;
+                case 9:
+                    System.out.println("Digite o número do pedido a ser entregue:");
+                    int numeroEntrega = sc.nextInt();
+                    sc.nextLine();
+                    boolean entregaConfirmada = sistema.confirmarEntregaPedido(numeroEntrega);
+                    if (entregaConfirmada) {
+                        System.out.println("Entrega do pedido confirmada.");
+                    } else {
+                        System.out.println("Pedido não encontrado ou já entregue.");
+                    }
+                    break;
+
+                case 10:
+                    System.out.println("Digite o número do pedido a ser cancelado:");
+                    int numeroCancelamento = sc.nextInt();
+                    sc.nextLine();
+                    boolean cancelamentoConfirmado = sistema.cancelarPedido(numeroCancelamento);
+                    if (cancelamentoConfirmado) {
+                        System.out.println("Pedido cancelado com sucesso.");
+                    } else {
+                        System.out.println("Pedido não encontrado ou não pode ser cancelado.");
                     }
                     break;
 
@@ -377,7 +436,7 @@ public class Menu {
                         System.out.println("6. Sair");
             
                         int opcaoCliente = sc.nextInt();
-                        sc.nextLine(); // limpa o scanner
+                        sc.nextLine(); 
             
                         if (opcaoCliente == 6) {
                             break;
@@ -418,7 +477,7 @@ public class Menu {
                         System.out.println("5. Sair");
             
                         int opcaoProduto = sc.nextInt();
-                        sc.nextLine(); // limpa o scanner
+                        sc.nextLine(); 
             
                         if (opcaoProduto == 5) {
                             break;
@@ -434,11 +493,11 @@ public class Menu {
                         } else if (opcaoProduto == 3) {
                             System.out.println("Nova quantidade em estoque:");
                             novaQuantidade = sc.nextInt();
-                            sc.nextLine(); // limpa o scanner
+                            sc.nextLine(); 
                         } else if (opcaoProduto == 4) {
                             System.out.println("Novo preço:");
                             novoPreco = sc.nextDouble();
-                            sc.nextLine(); // limpa o scanner
+                            sc.nextLine(); 
                         } else {
                             System.out.println("Opção inválida.");
                             continue;
@@ -480,107 +539,156 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    System.out.print("Digite o código ou uma palavra-chave para pesquisa: ");
-                    String termo = sc.nextLine();
-                    List<Produto> resultado = sistema.pesquisarProduto(termo);
-        
-                    if (resultado.isEmpty()) {
-                        System.out.println("Nenhum produto encontrado.");
-                        break;
-                    }
-        
-                    sistema.mostrarProdutos(resultado);
-        
-                    System.out.print("Digite o número do produto para adicionar ao carrinho ou 0 para voltar ao menu: ");
-                    int escolhaProduto = sc.nextInt();
-                    sc.nextLine();  // Consumir a nova linha
-        
-                    if (escolhaProduto == 0) {
-                        break;
-                    }
-        
-                    if (escolhaProduto < 1 || escolhaProduto > resultado.size()) {
-                        System.out.println("Produto inválido.");
-                        break;
-                    }
-        
-                    Produto produtoEscolhido = resultado.get(escolhaProduto - 1);
-        
-                    System.out.print("Digite a quantidade desejada: ");
-                    int quantidade = sc.nextInt();
-                    sc.nextLine();  // Consumir a nova linha
-        
-                    if (produtoEscolhido.getEstoque().getQuantidade() >= quantidade) {
-                        double precoTotal = produtoEscolhido.getEstoque().getPreco() * quantidade;
-                        System.out.println("Total do item: " + String.format("%.2f", precoTotal));
-                        System.out.print("Deseja confirmar a adição ao carrinho? (s/n): ");
-                        String confirmar = sc.nextLine();
-        
-                        if (confirmar.equalsIgnoreCase("s")) {
-                            sistema.adicionarProdutoAoCarrinho(produtoEscolhido, quantidade);
-                        }
-                    } else {
-                        System.out.println("Quantidade solicitada é maior do que a disponível em estoque.");
-                    }
+                    consultarProduto(sistema, sc);
                     break;
-        
                 case 2:
-                    sistema.realizarPedido();
+                	realizarPedido(sistema, sc);
                     break;
-        
                 case 3:
-                    System.out.println("1. Consultar por número do pedido");
-                    System.out.println("2. Consultar por intervalo de datas");
-                    System.out.print("Escolha uma opção: ");
-                    int escolhaPedido = sc.nextInt();
-                    sc.nextLine();  // Consumir a nova linha
-        
-                    switch (escolhaPedido) {
-                        case 1:
-                            System.out.print("Digite o número do pedido (número na lista): ");
-                            int numero = sc.nextInt();
-                            sc.nextLine();  // Consumir a nova linha
-                            sistema.visualizarPedido(numero);
-                            break;
-        
-                        case 2:
-                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-                            System.out.print("Digite a data de início (dd-MM-yyyy): ");
-                            String dataInicioStr = sc.nextLine();
-                            System.out.print("Digite a data de fim (dd-MM-yyyy): ");
-                            String dataFimStr = sc.nextLine();
-        
-                            try {
-                                Date dataInicio = formatter.parse(dataInicioStr);
-                                Date dataFim = formatter.parse(dataFimStr);
-                                List<Pedido> pedidos = sistema.consultarPedidosPorData(dataInicio, dataFim);
-        
-                                if (pedidos.isEmpty()) {
-                                    System.out.println("Nenhum pedido encontrado nesse intervalo.");
-                                } else {
-                                    for (Pedido p : pedidos) {
-                                        System.out.println(p);
-                                    }
-                                }
-                            } catch (Exception e) {
-                                System.out.println("Formato de data inválido.");
-                            }
-                            break;
-        
-                        default:
-                            System.out.println("Opção inválida.");
-                    }
+                    consultarPedidosCliente(sistema, sc);
                     break;
-        
                 case 0:
                     System.out.println("Voltando ao menu interno...");
                     break;
-        
                 default:
                     System.out.println("Opção inválida! Tente novamente.");
             }
         } while (opcao != 0);
     }
+    private static void consultarProduto(Sistema sistema, Scanner sc) {
+        System.out.println("Digite o código ou uma palavra-chave para pesquisa:");
+        String termo = sc.nextLine();
+
+        Produto produto = sistema.consultarProduto(termo);
+        if (produto != null) {
+            System.out.println(produto);
+        } else {
+            System.out.println("Produto não encontrado.");
+        }
+    }
+    public static Produto escolherProduto(Sistema sistema, Scanner sc) {
+        System.out.println("\n\nLista de Produtos: \nEscolha o produto que deseja adicionar ao carrinho");
+        for (int i = 0; i < sistema.getProdutos().size(); i++) {
+            System.out.println((i + 1) + ". " + sistema.getProdutos().get(i).toString());
+        }
+
+        System.out.println("Digite o código do produto ou a posição na lista:");
+        String entrada = sc.nextLine();
+
+        try {
+            int posicao = Integer.parseInt(entrada) - 1;
+            if (posicao >= 0 && posicao < sistema.getProdutos().size()) {
+                return sistema.getProdutos().get(posicao);
+            } else {
+                System.out.println("Posição inválida.");
+            }
+        } catch (NumberFormatException e) {
+            for (Produto produto : sistema.getProdutos()) {
+                if (produto.getCodigo().equals(entrada)) {
+                    return produto;
+                }
+            }
+            System.out.println("Código do produto não encontrado.");
+        }
+
+        return null;
+    }
+    private static void realizarPedido(Sistema sistema, Scanner sc) {
+        System.out.println("Digite o código do cliente:");
+        String codigoCliente = sc.nextLine();
+        Cliente cliente = sistema.consultarClientePorCodigo(codigoCliente);
+
+        if (cliente == null) {
+            System.out.println("Cliente não encontrado.");
+            return;
+        }
+        
+        //String codigoProduto = sc.nextLine();
+        System.out.println("Escolha o produto na lista abaixo:");
+
+        Produto produto = escolherProduto(sistema, sc);
+
+        if (produto == null) {
+            System.out.println("Produto não encontrado.");
+            return;
+        }
+
+        System.out.println("Digite a quantidade:");
+        int quantidade = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Valor total do item: "+(produto.getEstoque().getPreco() * quantidade)+"\nAdicionar ao carrinho? (s/n)");
+        String resposta = sc.nextLine();
+        if (resposta.equalsIgnoreCase("s")) {
+        	int pedido = sistema.realizarPedido(cliente, produto, quantidade, sc);
+            if (pedido > 0) {
+            	boolean maisProdutos = true;
+                while (maisProdutos) {
+                	System.out.println("Deseja adicionar mais produtos ao pedido? (s/n)");
+                     resposta = sc.nextLine();
+                    if (!resposta.equalsIgnoreCase("s")) {
+                        maisProdutos = false;
+                        continue;
+                    }
+                    System.out.println("Digite o código do produto:");
+                    String codigoProduto2 = sc.nextLine();
+                    Produto produto2 = sistema.consultarProdutoPorCodigo(codigoProduto2);
+
+                    if (produto2 == null) {
+                        System.out.println("Produto não encontrado.");
+                        continue;
+                    }
+
+                    System.out.println("Digite a quantidade:");
+                    int quantidade2 = sc.nextInt();
+                    sc.nextLine();
+
+                    sistema.adicionarAoPedido(pedido, produto2, quantidade2, sc);
+                }
+                Pedido p = sistema.consultarPedidoPorNumero(pedido);
+                if (p != null) {
+                    double valorTotalPedido = p.getValorTotal();
+                    double valorComIcms = valorTotalPedido * 1.17;
+                    System.out.println("Resumo do Pedido:");
+                    System.out.println(pedido);
+                    System.out.println("Valor total com ICMS (17%): " + valorComIcms);
+                    System.out.println("Confirmar pedido? (s/n)");
+                    String confirmacao = sc.nextLine();
+                    if (confirmacao.equalsIgnoreCase("s")) {
+                    	p.setSituacao("NOVO");
+                    	sistema.salvaPedidos();
+                        System.out.println("Pedido confirmado!");
+                    } else {
+                        System.out.println("Pedido cancelado.");
+                        // Se desejar, você pode implementar uma lógica para cancelar o pedido no sistema
+                    }
+                } else {
+                    System.out.println("Erro ao recuperar o pedido.");
+                }
+            } else {
+                System.out.println("Erro ao realizar pedido.");
+            }
+        }
+        
+    }
+    private static void consultarPedidosCliente(Sistema sistema, Scanner sc) {
+        System.out.println("Digite o código do cliente:");
+        String codigoCliente = sc.nextLine();
+
+        Cliente cliente = sistema.consultarClientePorCodigo(codigoCliente);
+        if (cliente == null) {
+            System.out.println("Cliente não encontrado.");
+            return;
+        }
+
+        List<Pedido> pedidos = sistema.consultarPedidosCliente(cliente);
+        if (pedidos.isEmpty()) {
+            System.out.println("Nenhum pedido encontrado para este cliente.");
+        } else {
+            for (Pedido pedido : pedidos) {
+                System.out.println(pedido);
+            }
+        }
+    }	
 
     private static void alterarFornecedor(Scanner sc, Sistema sistema) {
         System.out.println("Digite o nome do fornecedor que deseja alterar:");
@@ -626,6 +734,7 @@ public class Menu {
 
     // Métodos para entrada de dados
 
+    @SuppressWarnings("resource")
     private static String lerString(String mensagem) {
         Scanner sc = new Scanner(System.in);
         System.out.println(mensagem);

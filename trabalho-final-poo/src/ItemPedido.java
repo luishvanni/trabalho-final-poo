@@ -1,30 +1,26 @@
-public class ItemPedido {
+import java.io.Serializable;
+
+public class ItemPedido  implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Produto produto;
     private int quantidade;
-    private Double preco;
-    
-    public ItemPedido(Produto produto, Pedido pedido, int quantidade, Double preco) {
+    private double precoTotal;
+
+    public ItemPedido(Produto produto, int quantidade) {
         this.produto = produto;
         this.quantidade = quantidade;
-        this.preco = preco;
+        this.precoTotal = produto.getEstoque().getPreco() * quantidade;
     }
-    
+
     public Produto getProduto() {
         return produto;
     }
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
+
     public int getQuantidade() {
         return quantidade;
     }
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+
+    public double getPrecoTotal() {
+        return precoTotal;
     }
-    public Double getPreco() {
-        return preco;
-    }
-    public void setPreco(Double preco) {
-        this.preco = preco;
-    } 
 }

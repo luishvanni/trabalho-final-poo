@@ -1,113 +1,114 @@
+import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.text.SimpleDateFormat;
 
-
-public class Pedido {
+public class Pedido implements Serializable {
+    private static final long serialVersionUID = 1L;
     
-    private int numero;
+    private Integer numero;
     private Date dataPedido;
     private Date dataEntrega;
+    private Date dataCancelamento;
     private String situacao;
-    private List<ItemPedido> itens;
+    private Cliente cliente;
+    private ArrayList<ItemPedido> itens;
     private double valorTotal;
-
-
-    public Pedido(int numero, Date dataPedido, Date dataEntrega, String situacao, List<ItemPedido> itens, double valorTotal) {
+    
+    
+    public Pedido(Integer numero, Date dataPedido, Date dataEntrega, String situacao) {
         this.numero = numero;
         this.dataPedido = dataPedido;
-        this.dataEntrega = dataEntrega;
+        this.setDataEntrega(dataEntrega);
         this.situacao = situacao;
-        this.itens = itens;
-        this.valorTotal = valorTotal;
+        this.valorTotal = 0.0;
+        this.itens = new ArrayList<>();
     }
 
-    public int getNumero() {
+    public Integer getNumero() {
         return numero;
     }
-    public void setNumero(int numero) {
+
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
+
     public Date getDataPedido() {
         return dataPedido;
     }
+
     public void setDataPedido(Date dataPedido) {
         this.dataPedido = dataPedido;
     }
+
     public Date getDataEntrega() {
         return dataEntrega;
-    }
+    }	
+
     public void setDataEntrega(Date dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
+
     public String getSituacao() {
         return situacao;
     }
+
     public void setSituacao(String situacao) {
         this.situacao = situacao;
     }
 
-    public List<ItemPedido> getItens() {
-        return itens;
-    }
-
-    public void setItens(List<ItemPedido> itens) {
-        this.itens = itens;
-    }
-
     public double getValorTotal() {
-        return valorTotal;
-    }
+		return valorTotal;
+	}
 
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
+	public void setValorTotal(double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
 
-    
+	public Cliente getCliente() {
+		return cliente;
+	}
 
-    @Override
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public ArrayList<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(ArrayList<ItemPedido> itens) {
+		this.itens = itens;
+	}
+	@Override
     public String toString() {
-        Double precoTotal = 0.0;
-        for (ItemPedido itemPedido : itens) {
-            precoTotal += itemPedido.getPreco();
-        }
+		float total = 0;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Número do Pedido: ").append(numero)
+          .append("\nData do Pedido: ").append(dataPedido)
+          .append("\nData de Entrega: ").append(getDataEntrega())
+          .append("\nSituação: ").append(situacao)
+          .append("\nCliente: ").append(cliente.getNome())
+          .append("\nItens do Pedido:\n");
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
-        StringBuilder retorno = new StringBuilder("\nPedido:\n\n" +
-            "Número - " + numero + "\n" +
-            "Valor - " + String.format("%.2f", precoTotal * 1.17) + "\n" +
-            "Data da confirmação: - " + formatter.format(dataPedido) + "\n" +
-            "Data prevista (entrega): - " + formatter.format(dataEntrega) + "\n" +
-            "Situação - " + situacao);
-
-        return retorno.toString();
-    }
-
-    public String exibirItens() {
-        StringBuilder retorno = new StringBuilder("Itens do pedido:\n");
-    
         for (ItemPedido item : itens) {
-            if (item.getProduto() == null) {
-                retorno.append("Produto inválido\n");
-                continue;
-            }
-    
-            Produto produto = item.getProduto();
-            if (produto.getFoto() == null) produto.setFoto(new byte[0]);  // Definir uma foto padrão vazia
-            if (produto.getDescricao() == null) produto.setDescricao("Descrição não disponível");  // Descrição padrão se estiver faltando
-    
-            retorno.append("\nNome: '" + produto.getNome() + "'; Foto - " + new String(produto.getFoto()) + "; Descrição: " + produto.getDescricao() +
-                ";\nQuantidade: " + item.getQuantidade() + "; Valor Total: - " + item.getPreco() + "; Valor Unitário - " + produto.getEstoque().getPreco() + ";");
+            sb.append("Produto: ").append(item.getProduto().getNome())
+              .append("\nQuantidade: ").append(item.getQuantidade())
+              .append("\nPreço Unitário: R$ ").append(String.format("%.2f", item.getProduto().getEstoque().getPreco()))
+              .append("\nPreço Total: R$ ").append(String.format("%.2f", item.getPrecoTotal()))
+              .append("\n\n");
+            total+=item.getPrecoTotal();
         }
-    
-        retorno.append("\n");
-    
-        return retorno.toString();
+        
+        double ICMS = total * 0.17;
+        sb.append("Valor Total do Pedido com ICMS: R$ ").append(String.format("%.2f", total+ICMS));
+        return sb.toString();
     }
-    
 
-    
-     
+	public Date getDataCancelamento() {
+		return dataCancelamento;
+	}
+
+	public void setDataCancelamento(Date dataCancelamento) {
+		this.dataCancelamento = dataCancelamento;
+	}
 }

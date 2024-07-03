@@ -1,7 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fornecedor{
+public class Fornecedor implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     private String nome;
     private String codigo;

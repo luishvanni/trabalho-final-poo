@@ -1,14 +1,14 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-public class Cliente {
+public class Cliente implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
     private String nome;
     private String codigo;
     private String telefone;
     private String email;
     private String cartaoCredito;
     private Endereco endereco;
-    private List<Pedido> pedidos;
 
 
     public Cliente(String nome,String codigo, String telefone, String email, String cartaoCredito, Endereco endereco) {
@@ -18,7 +18,6 @@ public class Cliente {
         this.email = email;
         this.cartaoCredito = cartaoCredito;
         this.endereco = endereco;
-        this.pedidos = new ArrayList<>();
     }
 
 
@@ -79,14 +78,6 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
-
 
     @Override
     public String toString() {
@@ -95,7 +86,7 @@ public class Cliente {
         "\n" + "Nome: " + nome + 
         "\n" + "Código: " + codigo +
         "\n" + "Telefone:" + telefone + ", Email:" + email + ", cartaoCredito = "+ cartaoCredito + 
-        "\n" + "Endereco: " + getEndereco().toString() + (!pedidos.isEmpty() ? "\n" + pedidos.toString(): "\n");
+        "\n" + "Endereco: " + getEndereco().toString();
     }
 
 }
