@@ -317,10 +317,15 @@ public class Menu {
                 case 5:
                     System.out.println("Digite o nome do cliente:");
                     String nomeCliente = sc.nextLine();
-
+                
                     Cliente cliente = sistema.consultarClientePorNome(nomeCliente);
                     if (cliente != null) {
-                        System.out.println(nomeCliente.toString());
+                        System.out.println(cliente.toString()); 
+                        System.out.println("----------------------------------------");
+                        System.out.println("Pedidos do Cliente:");
+                        System.out.println("----------------------------------------");
+                        sistema.imprimirPedidosPorCliente(cliente.getCodigo());
+                        System.out.println("----------------------------------------");
                     } else {
                         System.out.println("Cliente não encontrado com nome fornecido: " + nomeCliente);
                     }
@@ -333,8 +338,13 @@ public class Menu {
                     Cliente clienteCodigo = sistema.consultarClientePorCodigo(codigoCliente);
                     if (clienteCodigo != null) {
                         System.out.println(clienteCodigo.toString());
+                        System.out.println("----------------------------------------");
+                        System.out.println("Pedidos do Cliente:");
+                        System.out.println("----------------------------------------");
+                        sistema.imprimirPedidosPorCliente(clienteCodigo.getCodigo());
+                        System.out.println("----------------------------------------");
                     } else {
-                        System.out.println("Cliente não encontrado com código fornecido: " + codigoCliente);
+                        System.out.println("Cliente não encontrado com nome fornecido: " + codigoCliente);
                     }
                     break;
                 case 7:
@@ -734,7 +744,6 @@ public class Menu {
 
     // Métodos para entrada de dados
 
-    @SuppressWarnings("resource")
     private static String lerString(String mensagem) {
         Scanner sc = new Scanner(System.in);
         System.out.println(mensagem);
